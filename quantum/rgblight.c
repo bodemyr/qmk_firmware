@@ -50,6 +50,8 @@ rgblight_config_t rgblight_config;
 LED_TYPE led[RGBLED_NUM];
 uint8_t rgblight_inited = 0;
 bool rgblight_timer_enabled = false;
+uint8_t offset_left = 0;
+uint8_t offset_right = 0;
 
 void sethsv(uint16_t hue, uint8_t sat, uint8_t val, LED_TYPE *led1) {
   uint8_t r = 0, g = 0, b = 0, base, color;
@@ -410,6 +412,14 @@ void rgblight_sethsv_noeeprom_old(uint16_t hue, uint8_t sat, uint8_t val) {
   }
 }
 
+void set_offset_right(uint8_t offset) {
+  offset_right = offset;
+}
+
+void set_offset_left(uint8_t offset) {
+  offset_left = offset;
+}
+
 void rgblight_sethsv_eeprom_helper(uint16_t hue, uint8_t sat, uint8_t val, bool write_to_eeprom) {
   if (rgblight_config.enable) {
     if (rgblight_config.mode == 1) {
@@ -626,7 +636,7 @@ void rgblight_effect_rainbow_swirl(uint8_t interval) {
     return;
   }
   last_timer = timer_read();
-  for (i = 0; i < RGBLED_NUM; i++) {
+  for (i = (0 + offset_left); i < (RGBLED_NUM - offset_right); i++) {
     hue = (360 / RGBLED_NUM * i + current_hue) % 360;
     sethsv(hue, rgblight_config.sat, rgblight_config.val, (LED_TYPE *)&led[i]);
   }

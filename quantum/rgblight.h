@@ -163,4 +163,7 @@ void rgblight_effect_knight(uint8_t interval);
 void rgblight_effect_christmas(void);
 void rgblight_effect_rgbtest(void);
 
+void set_offset_right(uint8_t offset);
+void set_offset_left(uint8_t offset);
+
 #endif
