@@ -65,5 +65,3 @@ int16_t adc_read(uint8_t mux)
 	return (ADCH << 8) | low;			// must read MSB only once!
 #endif
 }
-
-

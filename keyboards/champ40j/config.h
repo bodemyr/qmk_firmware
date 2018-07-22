@@ -1,14 +1,3 @@
-/**
- * @Author: Chris James Champeau <semaj4712>
- * @Date:   2018-06-05T12:26:55-07:00
- * @Email:  semaj4712@gmail.com
- * @Filename: config.h
- * @Last modified by:   semaj4712
- * @Last modified time: 2018-07-08T00:52:10-07:00
- */
-
-
-
 #ifndef CONFIG_H
 #define CONFIG_H
 
@@ -19,17 +8,16 @@
 #define PRODUCT_ID      0x6060
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Champs Speedshop
-#define PRODUCT         Planck Keyboard + Joystick
-#define DESCRIPTION     A Planck Keyboard with a Joystick Mouse
+#define PRODUCT         Joystick Tester
+#define DESCRIPTION     Joystick Tester
 
 /* key matrix size */
-#define MATRIX_ROWS 4
-#define MATRIX_COLS 12
+#define MATRIX_ROWS 1
+#define MATRIX_COLS 1
 
 /* key matrix pins */
-#define MATRIX_ROW_PINS { B1, F0, F1, F4 }
-#define MATRIX_COL_PINS { E7, E6, F5, B0, D4, D5, D6, D7, E0, E1, C0, C1 }
-#define UNUSED_PINS { C2, C3 }
+#define MATRIX_ROW_PINS { B1 }
+#define MATRIX_COL_PINS { E7 }
 
 #define QMK_ESC_OUTPUT E7
 #define QMK_ESC_INPUT B1

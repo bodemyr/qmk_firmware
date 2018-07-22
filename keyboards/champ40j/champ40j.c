@@ -21,8 +21,8 @@
 
 // Joystick
 // Set Pins
-int xPin = 3; // VRx
-int yPin = 2; // VRy
+int xPin = A2; // VRx
+int yPin = A2; // VRy
 int swPin = C4; // SW
 
 // Set Parameters
