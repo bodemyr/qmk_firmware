@@ -62,7 +62,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 static const uint8_t col_pins[MATRIX_COLS] = MATRIX_COL_PINS;
-static const uint8_t tp_pins[3] = TRACKPOINT_PINS;
 
 /* matrix state(1:on, 0:off) */
 static matrix_row_t matrix[MATRIX_ROWS];
@@ -207,14 +206,10 @@ uint8_t matrix_key_count(void)
 
 static const uint8_t row_bit[MATRIX_ROWS] = {
   //  76543210
-    0b00000000,
-    0b00100000,
-    0b01000000,
-    0b01100000,
-    0b10000000,
-    0b10100000,
-    0b11000000,
-    0b11100000,
+  0b10000000,
+  0b10100000,
+  0b11000000,
+  0b11100000,
 };
 
 static void init_cols(void)
@@ -230,12 +225,6 @@ static void init_cols(void)
     DDRF  |=  ROW_MASK;
     PORTF &= ~ROW_MASK;
 
-    // trackpoint
-    for(uint8_t x = 0; x < 3; x++) {
-        uint8_t pin = tp_pins[x];
-        _SFR_IO8((pin >> 4) + 1) &= ~_BV(pin & 0xF); // IN
-        _SFR_IO8((pin >> 4) + 2) |=  _BV(pin & 0xF); // HI
-    }
 }
 
 static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
@@ -245,20 +234,6 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
 
         // Clear data in matrix row
         current_matrix[current_row] = 0;
-
-        // special case for trackpoint
-        if (current_row == 8) {
-            for(uint8_t tp_index = 0; tp_index < 3; tp_index++) {
-
-                // Select the TP pin to read (active low)
-                uint8_t pin = tp_pins[tp_index];
-                uint8_t pin_state = (_SFR_IO8(pin >> 4) & _BV(pin & 0xF));
-
-                // Populate the matrix row with the state of the col pin
-                current_matrix[current_row] |=  pin_state ? 0 : (ROW_SHIFTER << tp_index);
-            }
-            return (last_row_value != current_matrix[current_row]);
-        }
 
         // Select row and wait for row selecton to stabilize
         select_row(current_row);
